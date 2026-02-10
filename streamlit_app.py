@@ -225,7 +225,7 @@ elif page == "📈 Evaluation on Test Data (DEFAULT)":
     
     st.header("📈 Evaluation on Test Data (DEFAULT)")
     
-    st.info("ℹ️ Using training test split (20% - 205 rows). All metrics are pre-computed from training.")
+    st.info("ℹ️ Using training test split (20% - 104 rows). All metrics are pre-computed from training.")
     
     st.markdown("---")
     
@@ -347,8 +347,8 @@ elif page == "📈 Evaluation on Test Data (DEFAULT)":
         fig, ax = plt.subplots(figsize=(6, 4))
         sns.heatmap(
             cm, annot=True, fmt="d", cmap="Blues",
-            xticklabels=["No Disease", "Disease"],
-            yticklabels=["No Disease", "Disease"],
+            xticklabels=["No Diabetes Risk", "Diabetes Risk"],
+            yticklabels=["No Diabetes Risk", "Diabetes Risk"],
             ax=ax
         )
         ax.set_xlabel("Predicted")
@@ -423,7 +423,7 @@ else:  # page == "📤 Upload & Predict on New Data"
     if os.path.exists("data/test_data.csv"):
         test_data_df = pd.read_csv("data/test_data.csv")
         st.download_button(
-            "📥 Download Test Data (205 rows) - See Required Format",
+            "📥 Download Test Data (104 rows) - See Required Format",
             data=test_data_df.to_csv(index=False).encode("utf-8"),
             file_name="test_data.csv",
             mime="text/csv",
