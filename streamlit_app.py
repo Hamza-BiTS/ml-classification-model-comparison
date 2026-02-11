@@ -346,7 +346,7 @@ elif page == "📈 Evaluation on Test Data (DEFAULT)":
         
         fig, ax = plt.subplots(figsize=(6, 4))
         sns.heatmap(
-            cm, annot=True, fmt="d", cmap="Blacks",
+            cm, annot=True, fmt="d", cmap="Greys",
             xticklabels=["No Diabetes Risk", "Diabetes Risk"],
             yticklabels=["No Diabetes Risk", "Diabetes Risk"],
             ax=ax
@@ -644,7 +644,7 @@ else:  # page == "📤 Upload & Predict on New Data"
             
             fig, ax = plt.subplots(figsize=(6, 4))
             sns.heatmap(
-                cm, annot=True, fmt="d", cmap="Blacks",
+                cm, annot=True, fmt="d", cmap="Greys",
                 xticklabels=["No Diabetes", "Diabetes"],
                 yticklabels=["No Diabetes ", "Diabetes"],
                 ax=ax
