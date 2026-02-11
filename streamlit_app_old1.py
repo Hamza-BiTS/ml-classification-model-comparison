@@ -3,10 +3,10 @@ import json
 import joblib
 import numpy as np
 import pandas as pd
-import seaborn as sns
+import seaborn as sns #type:ignore
 import matplotlib.pyplot as plt
 
-import streamlit as st
+import streamlit as st #type:ignore
 from sklearn.metrics import (
     accuracy_score,
     roc_auc_score,
