@@ -1,50 +1,50 @@
 {
     "Logistic Regression": {
-        "Accuracy": 0.8942,
-        "AUC": 0.9678,
-        "Precision": 0.9167,
+        "Accuracy": 0.9038,
+        "AUC": 0.9629,
+        "Precision": 0.9296,
         "Recall": 0.9296,
-        "F1": 0.9231,
-        "MCC": 0.7541
+        "F1": 0.9296,
+        "MCC": 0.7781
     },
     "Decision Tree": {
-        "Accuracy": 0.9519,
-        "AUC": 0.971,
-        "Precision": 0.9853,
-        "Recall": 0.9437,
-        "F1": 0.964,
-        "MCC": 0.8936
+        "Accuracy": 0.9135,
+        "AUC": 0.9706,
+        "Precision": 0.9697,
+        "Recall": 0.9014,
+        "F1": 0.9343,
+        "MCC": 0.8127
     },
     "K-Nearest Neighbors": {
-        "Accuracy": 0.8942,
-        "AUC": 0.971,
-        "Precision": 0.9545,
-        "Recall": 0.8873,
-        "F1": 0.9197,
-        "MCC": 0.7698
+        "Accuracy": 0.9038,
+        "AUC": 0.9742,
+        "Precision": 0.9552,
+        "Recall": 0.9014,
+        "F1": 0.9275,
+        "MCC": 0.788
     },
     "Naive Bayes": {
-        "Accuracy": 0.9231,
-        "AUC": 0.9609,
-        "Precision": 0.9315,
-        "Recall": 0.9577,
-        "F1": 0.9444,
-        "MCC": 0.8204
+        "Accuracy": 0.9135,
+        "AUC": 0.962,
+        "Precision": 0.9306,
+        "Recall": 0.9437,
+        "F1": 0.9371,
+        "MCC": 0.7988
     },
     "Random Forest": {
-        "Accuracy": 0.9135,
-        "AUC": 0.9784,
-        "Precision": 0.9429,
-        "Recall": 0.9296,
-        "F1": 0.9362,
-        "MCC": 0.8021
+        "Accuracy": 0.9327,
+        "AUC": 0.9825,
+        "Precision": 0.9444,
+        "Recall": 0.9577,
+        "F1": 0.951,
+        "MCC": 0.8436
     },
     "XGBoost": {
-        "Accuracy": 0.9327,
-        "AUC": 0.9887,
-        "Precision": 0.9571,
-        "Recall": 0.9437,
-        "F1": 0.9504,
-        "MCC": 0.8461
+        "Accuracy": 0.9808,
+        "AUC": 0.997,
+        "Precision": 1.0,
+        "Recall": 0.9718,
+        "F1": 0.9857,
+        "MCC": 0.9572
     }
 }
