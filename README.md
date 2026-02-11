@@ -45,21 +45,37 @@ The dataset includes 16 features gathered from patient questionnaires and clinic
 **Feature Groups:**
 
 Demographics - Age (numeric range) and Gender (Male/Female)
+
 Urinary Symptoms - Polyuria (excessive urination)
+
 Thirst Indicators - Polydipsia (excessive thirst)
+
 Weight Changes - Sudden Weight Loss
+
 General Fatigue - Weakness
+
 Hunger Patterns - Polyphagia (excessive hunger)
+
 Infection Signs - Genital Thrush
+
 Vision Issues - Visual Blurring
+
 Skin Conditions - Itching
+
 Mood Effects - Irritability
+
 Healing Problems - Delayed Healing
+
 Nerve-Related - Partial Paresis (muscle weakness)
+
 Mobility Issues - Muscle Stiffness
+
 Hair Loss - Alopecia
+
 Obesity Factor - Obesity (BMI-related)
+
 Class Label - Positive/Negative diabetes risk
+
 
 **Missing Values:** None
 
