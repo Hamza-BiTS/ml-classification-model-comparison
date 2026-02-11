@@ -257,7 +257,7 @@ The app will be live within a few minutes at: `https://diabetes-risk-prediction-
 
 ## License
 
-This project is created for educational purposes as part of Machine Learning Assignment.
+This project is created for educational purposes.
 
 ---
 
