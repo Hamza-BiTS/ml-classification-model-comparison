@@ -1,8 +1,8 @@
-import streamlit as st  # type: ignore
+import streamlit as st # type: ignore
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns  # type: ignore
+import seaborn as sns #type: ignore
 import joblib
 import json
 import os
@@ -21,50 +21,8 @@ st.set_page_config(
     layout="wide"
 )
 
-# =====================================================================================
-# GLOBAL STYLES (CENTERED LAYOUT FEEL)
-# =====================================================================================
-st.markdown(
-    """
-    <style>
-    body {
-        background-color: #ffffff;
-    }
-    .main {
-        background-color: #ffffff;
-    }
+st.title("🩺 Diabetes Risk Prediction")
 
-    /* Bring content even closer to the top */
-    section.main > div.block-container {
-        padding-top: 0.3rem;  /* or 0rem if you want it almost touching */
-        padding-bottom: 0rem;
-    }
-
-    .main > div {
-        max-width: 1100px;
-        margin: 0 auto;
-    }
-
-    .stTabs [data-baseweb="tab-list"] {
-        justify-content: center;
-    }
-    .stTabs [data-baseweb="tab"] {
-        padding: 0.6rem 1.6rem;
-        font-weight: 600;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-# =====================================================================================
-# HEADER
-# =====================================================================================
-st.markdown("<h1 style='text-align:center;'>🩺 Diabetes Risk Prediction</h1>", unsafe_allow_html=True)
-st.markdown(
-    "<p style='text-align:center; color:#666;'>Early Stage Diabetes Risk Prediction Application</p>",
-    unsafe_allow_html=True
-)
 st.markdown("---")
 
 # =====================================================================================
@@ -100,49 +58,79 @@ model_files = {
 }
 
 # =====================================================================================
-# TOP TABS NAVIGATION (REPLACES SIDEBAR)
+# SIDEBAR NAVIGATION
 # =====================================================================================
 
-tab1, tab2, tab3 = st.tabs([
-    "📊 Dataset Info & Overview",
-    "📈 Evaluation on Test Data",
-    "📤 Upload & Predict on New Data"
-])
+st.sidebar.title("📍 Navigation")
 
+page = st.sidebar.radio(
+    "Choose a section:",
+    [
+        "📊 Dataset Info & Overview",
+        "📈 Evaluation on Test Data (DEFAULT)",
+        "📤 Upload & Predict on New Data"
+    ],
+    index=1
+)
+
+st.sidebar.markdown("---")
+
+st.sidebar.subheader("📌 Evaluation Metrics Used")
+st.sidebar.write("Accuracy, AUC, Precision, Recall, F1, MCC")
+
+st.sidebar.subheader("📌 Models Implemented")
+st.sidebar.write("""
+- Logistic Regression  
+- Decision Tree  
+- KNN  
+- Naive Bayes  
+- Random Forest  
+- XGBoost  
+""")
+
+st.sidebar.markdown("---")
+
+st.sidebar.info("💡 Tip: Start with 'Evaluation on Test Data' to view training results.")
 # =====================================================================================
-# TAB 1: DATASET INFO & OVERVIEW
+# PAGE 1: DATASET INFO & OVERVIEW (SHORT VERSION)
 # =====================================================================================
-with tab1:
-    st.subheader("📊 Dataset Info & Overview")
-    st.markdown("""    Below are the details of the Dataset """)
+
+if page == "📊 Dataset Info & Overview":
+    
+    st.header("📊 Dataset Info & Overview")
+    
     st.markdown("---")
-
-    st.markdown("### 📁 Dataset Information")
+    
+    # Dataset Basic Information
+    st.subheader("📁 Dataset Information")
+    
     col1, col2 = st.columns(2)
-
+    
     with col1:
         st.markdown("""
-        **Dataset Name:** Early Stage Diabetes Risk Prediction  
+        **Dataset Name:** Early Stage Diabetes Risk Prediction
         **Source:** [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/529/early+stage+diabetes+risk+prediction+dataset)  
-        **Total Instances:** 520  
+        **Total Instances:** 520
         **Number of Features:** 16  
-        **Target Variable:**  Status(Positive Or Negative)
-        - 0 = No Diabetes Risk  
+        **Target Variable:**  
+        - 0 = No Diabetes Risk
         - 1 = Diabetes Risk
         """)
-
+    
     with col2:
         st.markdown("""
         **Train-Test Split:** 80-20  
         - Training: 416 instances  
         - Testing: 104 instances  
-
-        **Problem Type:** Binary Classification
+        
+        **Problem Type:** Binary Classification  
         """)
-
+    
     st.markdown("---")
-
-    st.markdown("### 🤖 Models Implemented")
+    
+    # Models Implemented
+    st.subheader("🤖 Models Implemented")
+    
     models_list = [
         "1. Logistic Regression",
         "2. Decision Tree",
@@ -151,18 +139,22 @@ with tab1:
         "5. Random Forest (Ensemble)",
         "6. XGBoost (Ensemble)"
     ]
-
+    
     col1, col2 = st.columns(2)
+    
     with col1:
         for model in models_list[:3]:
             st.write(model)
+    
     with col2:
         for model in models_list[3:]:
             st.write(model)
-
+    
     st.markdown("---")
-
-    st.markdown("### 📊 Evaluation Metrics Used")
+    
+    # Evaluation Metrics
+    st.subheader("📊 Evaluation Metrics Used")
+    
     metrics_list = [
         "1. Accuracy",
         "2. AUC Score",
@@ -171,83 +163,100 @@ with tab1:
         "5. F1 Score",
         "6. Matthews Correlation Coefficient (MCC)"
     ]
-
+    
     col1, col2 = st.columns(2)
+    
     with col1:
         for metric in metrics_list[:3]:
             st.write(metric)
+    
     with col2:
         for metric in metrics_list[3:]:
             st.write(metric)
-
+    
     st.markdown("---")
-
-    st.markdown("### 🔢 Features in Dataset")
+    
+    # Feature Names
+    st.subheader("🔢 Features in Dataset")
+    
     st.markdown("""
-    **16 Features:** Age, Sex, Polyuria, Polydipsia, sudden weight loss, weakness, Polyphagia, Genital thrush,  
-    visual blurring, Itching, Irritability, delayed healing, partial paresis, muscle stifness, Alopecia, Obesity
+    **13 Features:** age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal
     """)
-
+    
     with st.expander("📄 View Feature Details"):
         feature_details = {
             "Feature": [
-                "Age", "Sex", "Polyuria", "Polydipsia", "sudden weight loss", "weakness", "Polyphagia",
-                "Genital thrush", "visual blurring", "Itching", "Irritability", "delayed healing",
-                "partial paresis", "muscle stifness", "Alopecia", "Obesity", "Class"
+                "Age","Sex","Polyuria","Polydipsia","sudden weight loss","weakness","Polyphagia","Genital thrush",
+                "visual blurring","Itching","Irritability","delayed healing","partial paresis","muscle stifness",
+                "Alopecia","Obesity","Class"
             ],
             "Description": [
                 "Age 1.20-65",
-                "Sex 1. Male, 2.Female",
-                "Excessive Urine 1.Yes, 2.No.",
-                "Excessive Thirst 1.Yes, 2.No.",
+                "Sex 1. Male, 2.Female",	
+                "Polyuria 1.Yes, 2.No.",	
+                "Polydipsia 1.Yes, 2.No.",
                 "sudden weight loss 1.Yes, 2.No.",
                 "weakness 1.Yes, 2.No.",
-                "Excessive Hunger 1.Yes, 2.No.",
-                "Genital Yeast Infection 1.Yes, 2.No.",
+                "Polyphagia 1.Yes, 2.No.",
+                "Genital thrush 1.Yes, 2.No.",	
                 "visual blurring 1.Yes, 2.No.",
                 "Itching 1.Yes, 2.No.",
                 "Irritability 1.Yes, 2.No.",
                 "delayed healing 1.Yes, 2.No.",
-                "partial paresis 1.Yes, 2.No.",
+                "partial paresis 1.Yes, 2.No.",	
                 "muscle stifness 1.Yes, 2.No.",
                 "Alopecia 1.Yes, 2.No.",
                 "Obesity 1.Yes, 2.No.",
                 "Class 1.Positive, 2.Negative."
             ]
         }
-
+        
         feature_df = pd.DataFrame(feature_details)
         st.dataframe(feature_df, use_container_width=True)
-
+    
     st.markdown("---")
-    st.success("✅ Go to the 'Evaluation on Test Data' tab to see model performance results!")
+    
+    st.success("✅ Navigate to 'Evaluation on Test Data' to see model performance results!")
+    # =====================================================================================
+# PAGE 2: EVALUATION ON TEST DATA (DEFAULT)
+# =====================================================================================
 
-# =====================================================================================
-# TAB 2: EVALUATION ON TEST DATA (DEFAULT LOGIC)
-# =====================================================================================
-with tab2:
-    st.subheader("📈 Evaluation on Test Data (20% Split)")
+elif page == "📈 Evaluation on Test Data (DEFAULT)":
+    
+    st.header("📈 Evaluation on Test Data (DEFAULT)")
+    
     st.info("ℹ️ Using training test split (20% - 104 rows). All metrics are pre-computed from training.")
+    
     st.markdown("---")
-
+    
+    # =====================================================================================
     # MODEL COMPARISON TABLE
-    st.markdown("### 📋 Model Comparison Table")
-    st.markdown(
-        "The table below compares all 6 models based on evaluation metrics computed on the **20% test split**."
-    )
-
+    # =====================================================================================
+    
+    st.subheader("📋 Model Comparison Table")
+    
+    st.markdown("""
+    The table below compares all 6 models based on evaluation metrics computed during training on the **20% test split**.
+    """)
+    
     comparison_df = pd.DataFrame(training_metrics).T
     comparison_df = comparison_df.reset_index()
     comparison_df.columns = ["ML Model Name", "Accuracy", "AUC", "Precision", "Recall", "F1", "MCC"]
-
+    
+    # Format metrics to 4 decimal places
     for col in ["Accuracy", "AUC", "Precision", "Recall", "F1", "MCC"]:
         comparison_df[col] = comparison_df[col].apply(lambda x: f"{x:.4f}")
-
+    
     st.dataframe(comparison_df, use_container_width=True)
+    
     st.markdown("---")
-
+    
+    # =====================================================================================
     # OBSERVATIONS TABLE
-    st.markdown("### 📝 Model Performance Observations")
+    # =====================================================================================
+    
+    st.subheader("📝 Model Performance Observations")
+    
     observations = {
         "ML Model Name": [
             "Logistic Regression",
@@ -266,42 +275,57 @@ with tab2:
             "Achieves best overall performance across all metrics; effectively captures complex non-linear patterns in data; requires careful hyperparameter tuning."
         ]
     }
+    
     observations_df = pd.DataFrame(observations)
     st.dataframe(observations_df, use_container_width=True)
+    
     st.markdown("---")
-
-    # DETAILED MODEL EVALUATION
-    st.markdown("### 🤖 Detailed Model Evaluation")
+    
+    # =====================================================================================
+    # MODEL SELECTION FOR DETAILED EVALUATION
+    # =====================================================================================
+    
+    st.subheader("🤖 Detailed Model Evaluation")
+    
     st.markdown("Select a model to view detailed evaluation metrics, confusion matrix, and classification report.")
-
+    
     model_choice = st.selectbox(
         "Choose a model for detailed evaluation:",
         list(model_files.keys()),
         index=0,
         key="test_data_model_selection"
     )
+    
     st.markdown("---")
-
+    
+    # Load test data
     if os.path.exists("data/test_data.csv"):
         test_df = pd.read_csv("data/test_data.csv")
         X_test = test_df[feature_names]
         y_test = test_df["target"]
-
+        
+        # Load selected model
         model_path = f"{MODEL_DIR}/{model_files[model_choice]}"
         if not os.path.exists(model_path):
             st.error(f"❌ Model file not found: {model_path}")
             st.stop()
-
+        
         model = joblib.load(model_path)
-
+        
+        # Make predictions
         X_scaled = scaler.transform(X_test)
         pred = model.predict(X_scaled)
         pred_prob = model.predict_proba(X_scaled)[:, 1]
-
-        # METRICS (STATIC FROM TRAINING)
+        
+        # =====================================================================================
+        # DISPLAY EVALUATION METRICS
+        # =====================================================================================
+        
         st.subheader(f"📊 Evaluation Metrics — {model_choice}")
+        
+        # Get metrics from training (STATIC - from metrics.json)
         metrics = training_metrics.get(model_choice, {})
-
+        
         col1, col2, col3 = st.columns(3)
         col1.metric("Accuracy", f"{metrics.get('Accuracy', 0):.4f}")
         col1.metric("AUC", f"{metrics.get('AUC', 0):.4f}")
@@ -309,13 +333,17 @@ with tab2:
         col2.metric("Recall", f"{metrics.get('Recall', 0):.4f}")
         col3.metric("F1", f"{metrics.get('F1', 0):.4f}")
         col3.metric("MCC", f"{metrics.get('MCC', 0):.4f}")
-
+        
         st.markdown("---")
-
-        # CONFUSION MATRIX (TRAINING)
+        
+        # =====================================================================================
+        # CONFUSION MATRIX
+        # =====================================================================================
+        
         st.subheader(f"🔢 Confusion Matrix — {model_choice}")
+        
         cm = np.array(training_cm[model_choice])
-
+        
         fig, ax = plt.subplots(figsize=(6, 4))
         sns.heatmap(
             cm, annot=True, fmt="d", cmap="Greys",
@@ -328,61 +356,70 @@ with tab2:
         ax.set_title(f"Confusion Matrix - {model_choice}")
         st.pyplot(fig)
         plt.close()
-
+        
         st.markdown("---")
-
+        
+        # =====================================================================================
         # CLASSIFICATION REPORT
+        # =====================================================================================
+        
         st.subheader(f"📄 Classification Report — {model_choice}")
+        
         cr = training_cr[model_choice]
         cr_df = pd.DataFrame(cr).transpose()
-
+        
+        # Format numeric columns
         for col in cr_df.columns:
             if cr_df[col].dtype in ['float64', 'int64']:
-                cr_df[col] = cr_df[col].apply(
-                    lambda x: f"{x:.4f}" if isinstance(x, (int, float)) else x
-                )
-
+                cr_df[col] = cr_df[col].apply(lambda x: f"{x:.4f}" if isinstance(x, (int, float)) else x)
+        
         st.dataframe(cr_df, use_container_width=True)
+        
         st.markdown("---")
-
-        # PREDICTIONS TABLE (TEST DATA)
+        
+        # =====================================================================================
+        # PREDICTIONS TABLE
+        # =====================================================================================
+        
         st.subheader(f"🎯 Predictions — {model_choice}")
+        
         output = X_test.copy()
         output["Actual"] = y_test.values
         output["Predicted"] = pred
         output["Confidence (%)"] = (pred_prob * 100).round(2)
-        output["Correct"] = (output["Predicted"] == output["Actual"]).map(
-            {True: "✅ Yes", False: "❌ No"}
-        )
-
-        st.markdown(
-            f"**Total Predictions:** {len(output)} | "
-            f"**Correct:** {(pred == y_test).sum()} | "
-            f"**Incorrect:** {(pred != y_test).sum()}"
-        )
-
+        output["Correct"] = (output["Predicted"] == output["Actual"]).map({True: "✅ Yes", False: "❌ No"})
+        
+        st.markdown(f"**Total Predictions:** {len(output)} | **Correct:** {(pred == y_test).sum()} | **Incorrect:** {(pred != y_test).sum()}")
+        
         with st.expander("📄 Preview Predictions (First 10 rows)"):
             st.dataframe(output.head(10), use_container_width=True)
-
+        
+        # Download predictions
         st.download_button(
             "📥 Download Full Predictions CSV",
             data=output.to_csv(index=False).encode("utf-8"),
             file_name=f"predictions_{model_choice.replace(' ', '_').lower()}_test_data.csv",
             mime="text/csv"
         )
+        
     else:
         st.error("❌ test_data.csv not found. Please ensure the file exists in the data/ folder.")
-
 # =====================================================================================
-# TAB 3: UPLOAD & PREDICT ON NEW DATA
+# PAGE 3: UPLOAD & PREDICT ON NEW DATA (DYNAMIC)
 # =====================================================================================
-with tab3:
-    st.subheader("📤 Upload & Predict on New Data")
-    st.markdown(
-        "Upload your own CSV file to test the models on new data. "
-        "The file must contain the same 16 features plus the target column."
-    )
 
+else:  # page == "📤 Upload & Predict on New Data"
+    
+    st.header("📤 Upload & Predict on New Data")
+    
+    st.markdown("""
+    Upload your own CSV file to test the models on new data. The file must contain the same 13 features plus the target column.
+    """)
+    
+    # =====================================================================================
+    # DOWNLOAD TEST DATA BUTTON
+    # =====================================================================================
+    
     if os.path.exists("data/test_data.csv"):
         test_data_df = pd.read_csv("data/test_data.csv")
         st.download_button(
@@ -394,85 +431,125 @@ with tab3:
         )
     else:
         st.warning("⚠️ test_data.csv not found in data/ folder")
-
+    
     st.markdown("---")
-
+    
+    # =====================================================================================
+    # FILE UPLOAD (1 MARK - DATASET UPLOAD OPTION)
+    # =====================================================================================
+    
     uploaded_file = st.file_uploader(
         "📁 Upload your CSV file:",
         type=["csv"],
-        help="Upload a CSV with 16 features + target column"
+        help="Upload a CSV with 13 features + target column"
     )
-
+    
     if uploaded_file is not None:
+        
         try:
+            # =====================================================================================
+            # LOAD UPLOADED DATA
+            # =====================================================================================
+            
             df = pd.read_csv(uploaded_file)
-
+            
+            # =====================================================================================
+            # VALIDATION 1: CHECK IF FILE IS EMPTY (CRITICAL - MUST BE FIRST)
+            # =====================================================================================
+            
             if df.empty or len(df) == 0:
                 st.error("❌ **The uploaded file is empty (0 rows).**")
                 st.error("Please upload a CSV file with at least 1 row of data.")
                 st.info("💡 **Tip:** Download the test data file above to see the required format.")
                 st.stop()
-
+            
+            # SUCCESS MESSAGE (NO ROW COUNT AS REQUESTED)
             st.success("✅ File uploaded successfully!")
-
+            
+            # =====================================================================================
+            # VALIDATION 2: CHECK REQUIRED COLUMNS
+            # =====================================================================================
+            
             required_cols = set(feature_names + ["target"])
             df_cols = set(df.columns)
-
+            
             missing = required_cols - df_cols
             extra = df_cols - required_cols
-
+            
             if missing:
                 st.error(f"❌ **Missing required columns:** `{', '.join(sorted(missing))}`")
                 st.error("**Your CSV must contain all of the following columns:**")
                 st.code(", ".join(feature_names + ["target"]), language="text")
                 st.info("💡 **Tip:** Download the test data file above to see the correct format.")
                 st.stop()
-
+            
             if extra:
                 st.warning(f"⚠️ **Extra columns detected** (will be ignored): `{', '.join(sorted(extra))}`")
-
+            
+            # =====================================================================================
+            # VALIDATION 3: EXTRACT FEATURES AND TARGET
+            # =====================================================================================
+            
             X_test = df[feature_names]
             y_test = df["target"]
-
+            
+            # =====================================================================================
+            # VALIDATION 4: CHECK DATA TYPES (NON-NUMERIC VALUES)
+            # =====================================================================================
+            
             try:
                 X_test = X_test.astype(float)
             except ValueError:
                 st.error("❌ **Non-numeric values detected in feature columns.**")
                 st.error("All feature columns must contain **only numeric values** (integers or floats).")
                 st.info("💡 **Tip:** Check your CSV for text values, special characters, or empty cells in numeric columns.")
-
+                
                 problematic_cols = []
                 for col in feature_names:
                     try:
                         df[col].astype(float)
-                    except Exception:
+                    except:
                         problematic_cols.append(col)
-
+                
                 if problematic_cols:
                     st.error(f"**Problematic columns:** `{', '.join(problematic_cols)}`")
-
+                
                 st.stop()
-
+            
+            # =====================================================================================
+            # VALIDATION 5: CHECK FOR MISSING VALUES IN FEATURES
+            # =====================================================================================
+            
             if X_test.isnull().any().any():
                 missing_features = X_test.columns[X_test.isnull().any()].tolist()
                 missing_counts = X_test[missing_features].isnull().sum().to_dict()
-
+                
                 st.error("❌ **Missing values detected in feature columns:**")
+                
                 for feat, count in missing_counts.items():
                     st.error(f"   - `{feat}`: {count} missing value(s)")
-
+                
                 st.error("**Please handle missing values before uploading.**")
                 st.info("💡 **Tip:** Use imputation (mean/median/mode) or remove rows with missing values.")
                 st.stop()
-
+            
+            # =====================================================================================
+            # VALIDATION 6: CHECK FOR MISSING VALUES IN TARGET
+            # =====================================================================================
+            
             if y_test.isnull().any():
                 missing_count = y_test.isnull().sum()
                 st.error(f"❌ **Missing values detected in target column:** {missing_count} missing value(s)")
                 st.error("The **'target'** column must have no missing values.")
                 st.info("💡 **Tip:** Remove rows where target is missing or assign appropriate values.")
                 st.stop()
-
+            
+            # =====================================================================================
+            # VALIDATION 7: VALIDATE TARGET VALUES (MUST BE 0 OR 1)
+            # =====================================================================================
+            
             unique_targets = sorted(y_test.unique())
+            
             if not set(unique_targets).issubset({0, 1}):
                 st.error(f"❌ **Invalid target values detected:** `{unique_targets}`")
                 st.error("The **'target'** column must contain **only 0 and 1**.")
@@ -480,63 +557,96 @@ with tab3:
                 st.error("   - **1** = Diabetes Risk")
                 st.info("💡 **Tip:** Check your target column for unexpected values or typos.")
                 st.stop()
-
+            
+            # =====================================================================================
+            # MINIMAL DATASET INFO (AS REQUESTED - LIMITED INFO ONLY)
+            # =====================================================================================
+            
             st.info(f"ℹ️ Dataset loaded: {len(df)} instances, {len(feature_names)} features")
-
+            
             with st.expander("📄 Preview Uploaded Data (First 10 rows)"):
                 st.dataframe(df.head(10), use_container_width=True)
-
+            
             st.markdown("---")
-
+            
+            # =====================================================================================
+            # MODEL SELECTION (1 MARK - ONLY SHOWN IF ALL VALIDATIONS PASS)
+            # =====================================================================================
+            
             st.subheader("🤖 Select Model for Evaluation")
+            
             model_choice = st.selectbox(
                 "Choose a model:",
                 list(model_files.keys()),
                 index=0,
                 key="upload_data_model_selection"
             )
-
+            
+            # Load selected model
             model_path = f"{MODEL_DIR}/{model_files[model_choice]}"
+            
             if not os.path.exists(model_path):
                 st.error(f"❌ Model file not found: `{model_path}`")
                 st.error("Please ensure all model files are present in the `model/` directory.")
                 st.stop()
-
+            
             model = joblib.load(model_path)
+            
             st.markdown("---")
-
+            
+            # =====================================================================================
+            # PREDICTIONS & EVALUATION (DYNAMIC - COMPUTED LIVE)
+            # =====================================================================================
+            
+            # Scale features
             X_scaled = scaler.transform(X_test)
+            
+            # Make predictions
             pred = model.predict(X_scaled)
             pred_prob = model.predict_proba(X_scaled)[:, 1]
-
+            
+            # =====================================================================================
+            # COMPUTE METRICS (LIVE) (1 MARK - DISPLAY EVALUATION METRICS)
+            # =====================================================================================
+            
             st.subheader(f"📊 Evaluation Metrics — {model_choice}")
+            
             acc = accuracy_score(y_test, pred)
             auc = roc_auc_score(y_test, pred_prob)
             prec = precision_score(y_test, pred, zero_division=0)
             rec = recall_score(y_test, pred, zero_division=0)
             f1 = f1_score(y_test, pred, zero_division=0)
             mcc = matthews_corrcoef(y_test, pred)
-
+            
             col1, col2, col3 = st.columns(3)
+            
             with col1:
                 st.metric("Accuracy", f"{acc:.4f}")
                 st.metric("AUC Score", f"{auc:.4f}")
+            
             with col2:
                 st.metric("Precision", f"{prec:.4f}")
                 st.metric("Recall", f"{rec:.4f}")
+            
             with col3:
                 st.metric("F1 Score", f"{f1:.4f}")
                 st.metric("MCC", f"{mcc:.4f}")
-
+            
             st.markdown("---")
-
+            
+            # =====================================================================================
+            # CONFUSION MATRIX (LIVE) (1 MARK - REQUIRED BY PDF)
+            # =====================================================================================
+            
             st.subheader(f"🔢 Confusion Matrix — {model_choice}")
+            
             cm = confusion_matrix(y_test, pred)
+            
             fig, ax = plt.subplots(figsize=(6, 4))
             sns.heatmap(
                 cm, annot=True, fmt="d", cmap="Greys",
                 xticklabels=["No Diabetes", "Diabetes"],
-                yticklabels=["No Diabetes", "Diabetes"],
+                yticklabels=["No Diabetes ", "Diabetes"],
                 ax=ax
             )
             ax.set_xlabel("Predicted")
@@ -544,35 +654,51 @@ with tab3:
             ax.set_title(f"Confusion Matrix - {model_choice}")
             st.pyplot(fig)
             plt.close()
-
+            
             st.markdown("---")
-
+            
+            # =====================================================================================
+            # CLASSIFICATION REPORT (LIVE) (1 MARK - REQUIRED BY PDF)
+            # =====================================================================================
+            
             st.subheader(f"📄 Classification Report — {model_choice}")
+            
             cr = classification_report(y_test, pred, output_dict=True, zero_division=0)
             cr_df = pd.DataFrame(cr).transpose()
+            
+            # Format numeric columns
             for col in cr_df.columns:
                 if cr_df[col].dtype in ['float64', 'int64']:
-                    cr_df[col] = cr_df[col].apply(
-                        lambda x: f"{x:.4f}" if isinstance(x, (int, float)) else x
-                    )
-
+                    cr_df[col] = cr_df[col].apply(lambda x: f"{x:.4f}" if isinstance(x, (int, float)) else x)
+            
             st.dataframe(cr_df, use_container_width=True)
+            
             st.markdown("---")
-
+            
+            # =====================================================================================
+            # PREDICTIONS TABLE (NO SUMMARY STATISTICS AS REQUESTED)
+            # =====================================================================================
+            
             st.subheader(f"🎯 Predictions — {model_choice}")
+            
             output = X_test.copy()
             output["Actual"] = y_test.values
             output["Predicted"] = pred
             output["Confidence (%)"] = (pred_prob * 100).round(2)
-            output["Correct"] = (output["Predicted"] == output["Actual"]).map(
-                {True: "✅ Yes", False: "❌ No"}
-            )
-
+            output["Correct"] = (output["Predicted"] == output["Actual"]).map({True: "✅ Yes", False: "❌ No"})
+            
+            # Show preview only
             with st.expander("📄 Preview Predictions (First 10 rows)"):
                 st.dataframe(output.head(10), use_container_width=True)
-
+            
+            # =====================================================================================
+            # DOWNLOAD OPTIONS (AS REQUESTED)
+            # =====================================================================================
+            
             col1, col2 = st.columns(2)
+            
             with col1:
+                # Download full predictions
                 st.download_button(
                     label="📥 Download Full Predictions CSV",
                     data=output.to_csv(index=False).encode("utf-8"),
@@ -580,12 +706,13 @@ with tab3:
                     mime="text/csv",
                     help="Download all predictions with actual values, predicted values, and confidence scores"
                 )
-
+            
             with col2:
+                # Download prediction summary (OPTIONAL - AS REQUESTED)
                 correct_count = (pred == y_test).sum()
                 incorrect_count = (pred != y_test).sum()
                 accuracy_pct = (correct_count / len(pred)) * 100
-
+                
                 summary_text = f"""Prediction Summary for {model_choice}
 
 Total Predictions: {len(output)}
@@ -600,6 +727,7 @@ Evaluation Metrics:
 - F1 Score: {f1:.4f}
 - MCC: {mcc:.4f}
 """
+                
                 st.download_button(
                     label="📥 Download Prediction Summary (TXT)",
                     data=summary_text.encode("utf-8"),
@@ -607,48 +735,59 @@ Evaluation Metrics:
                     mime="text/plain",
                     help="Download a text summary of predictions and metrics"
                 )
-
+            
         except Exception as e:
+            # =====================================================================================
+            # EXCEPTION HANDLING (CATCH-ALL FOR UNEXPECTED ERRORS)
+            # =====================================================================================
+            
             st.error("❌ **An unexpected error occurred while processing your file.**")
             st.error(f"**Error details:** `{str(e)}`")
             st.info("💡 **Troubleshooting tips:**")
             st.markdown("""
-            - Ensure your CSV file is properly formatted  
-            - Check that all columns contain appropriate data types  
-            - Verify that there are no special characters or encoding issues  
+            - Ensure your CSV file is properly formatted
+            - Check that all columns contain appropriate data types
+            - Verify that there are no special characters or encoding issues
             - Try downloading the test data file above and comparing formats
             """)
+            
             with st.expander("🔍 View Full Error Traceback (for debugging)"):
                 import traceback
                 st.code(traceback.format_exc())
+    
     else:
+        # =====================================================================================
+        # NO FILE UPLOADED MESSAGE
+        # =====================================================================================
+        
         st.info("👆 **Please upload a CSV file to begin evaluation.**")
+        
         st.markdown("""
         ### 📋 Required CSV Format
-
+        
         Your CSV file must contain the following columns:
-
-        **Features (16 columns):**  
-        Age,Sex,Polyuria,Polydipsia,sudden weight loss,weakness,Polyphagia,Genital thrush,
-        visual blurring,Itching,Irritability,delayed healing,partial paresis,muscle stifness,
-        Alopecia,Obesity
-
-        **Target (1 column):**  
-        target (values: 0 or 1)
-
-        **Total:** 17 columns
-
+        
+        **Features (15 columns):**
+        - Age,Sex,Polyuria,Polydipsia,sudden weight loss,weakness,Polyphagia,Genital thrush,visual blurring,Itching,Irritability,delayed healing,partial paresis,muscle stifness,Alopecia,Obesity
+        
+        **Target (1 column):**
+        - status (values: 0 or 1)
+        
+        **Total:** 16 columns
+        
         ### 💡 Tips:
-        - Download the test data file above to see the exact format required  
-        - Ensure all feature columns contain numeric values  
-        - Ensure target column contains only 0 and 1  
+        - Download the test data file above to see the exact format required
+        - Ensure all feature columns contain numeric values
+        - Ensure target column contains only 0 and 1
         - Remove any rows with missing values
         """)
 
 # =====================================================================================
-# FOOTER (SHOWS ON ALL TABS)
+# FOOTER (REQUIRED - SHOWS ON ALL PAGES)
 # =====================================================================================
+
 st.markdown("---")
+
 st.markdown(
     """
     <div style='text-align: center; color: #666; padding: 20px;'>
