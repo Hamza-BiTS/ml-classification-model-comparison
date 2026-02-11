@@ -21,7 +21,7 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("🩸 Diabetes Risk Prediction – ML Assignment 2")
+st.title("🩸 Diabetes Risk Prediction")
 
 st.markdown("---")
 
@@ -791,9 +791,9 @@ st.markdown("---")
 st.markdown(
     """
     <div style='text-align: center; color: #666; padding: 20px;'>
-        <p style='font-size: 16px; margin-bottom: 10px;'>
-            💙 <b>ML Assignment 2</b> – BITS Pilani M.Tech AIML/DSE
-        </p>
+        # <p style='font-size: 16px; margin-bottom: 10px;'>
+        #     💙 <b>ML Assignment 2</b> – BITS Pilani M.Tech AIML/DSE
+        # </p>
         <p style='font-size: 14px; color: #888;'>
             Developed with Streamlit | Deployed on Streamlit Community Cloud
         </p>
