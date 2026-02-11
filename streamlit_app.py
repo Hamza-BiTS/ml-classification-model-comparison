@@ -644,7 +644,7 @@ else:  # page == "📤 Upload & Predict on New Data"
             
             fig, ax = plt.subplots(figsize=(6, 4))
             sns.heatmap(
-                cm, annot=True, fmt="d", cmap="Blues",
+                cm, annot=True, fmt="d", cmap="Blacks",
                 xticklabels=["No Diabetes", "Diabetes"],
                 yticklabels=["No Diabetes ", "Diabetes"],
                 ax=ax
