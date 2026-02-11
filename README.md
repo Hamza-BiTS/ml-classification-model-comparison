@@ -2,7 +2,7 @@
 
 **M.Tech-AIML - Machine Learning Assignment 2**
 
-**Author:** MOHAMMAD HAMZA
+**Author:** MOHAMMAD HAMZA (2025AA05070)
 
 **Date:** February 2026
 
@@ -89,12 +89,12 @@ Class Label - Positive/Negative diabetes risk
 
 | ML Model Name            | Accuracy | AUC    | Precision | Recall | F1     | MCC    |
 | ------------------------ | -------- | ------ | --------- | ------ | ------ | ------ |
-| Logistic Regression      | 0.9825   | 0.9954 | 0.9861    | 0.9861 | 0.9861 | 0.9623 |
-| Decision Tree            | 0.9123   | 0.9157 | 0.9559    | 0.9028 | 0.9286 | 0.8174 |
-| kNN                      | 0.9561   | 0.9788 | 0.9589    | 0.9722 | 0.9655 | 0.9054 |
-| Naive Bayes              | 0.9298   | 0.9868 | 0.9444    | 0.9444 | 0.9444 | 0.8492 |
-| Random Forest (Ensemble) | 0.9561   | 0.9939 | 0.9589    | 0.9722 | 0.9655 | 0.9054 |
-| XGBoost (Ensemble)       | 0.9561   | 0.9917 | 0.9467    | 0.9861 | 0.9660 | 0.9058 |
+| Logistic Regression      | 0.9038	  | 0.9629 | 0.9296	  | 0.9296 | 0.9296 | 0.7781 |
+| Decision Tree            | 0.9135	  | 0.9706 | 0.9697	  | 0.9014 | 0.9343 | 0.8127 |
+| kNN                      | 0.9038	  | 0.9742 | 0.9552	  | 0.9014 | 0.9275 | 0.7880 |
+| Naive Bayes              | 0.9135	  | 0.9620 | 0.9306	  | 0.9437 | 0.9371 | 0.7988 |
+| Random Forest (Ensemble) | 0.9327	  | 0.9825 | 0.9444	  | 0.9577 | 0.9510 | 0.8436 |
+| XGBoost (Ensemble)       | 0.9808	  | 0.9970 | 1.0000	  | 0.9718 | 0.9857 | 0.9572 |
 
 ---
 
@@ -102,12 +102,12 @@ Class Label - Positive/Negative diabetes risk
 
 | ML Model Name                      | Observation about model performance                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Logistic Regression**      | Achieves the highest accuracy (98.25%) among all models with excellent AUC score (0.9954), demonstrating outstanding discrimination capability. Perfect balance between precision and recall (0.9861) makes it highly reliable for clinical applications. The high MCC (0.9623) confirms strong performance even accounting for class imbalance. Linear decision boundary works exceptionally well for this dataset, likely due to well-separated feature space. |
-| **Decision Tree**            | Shows the lowest performance with 91.23% accuracy, indicating tendency to overfit despite max_depth constraint. Lower recall (0.9028) compared to other models means it misses more malignant cases, which is problematic for medical diagnosis. However, high precision (0.9559) shows that when it predicts malignant, it's usually correct. The model's interpretability is valuable but comes at the cost of prediction accuracy.                            |
-| **kNN**                      | Demonstrates strong performance (95.61% accuracy) by leveraging local similarity between samples. Excellent recall (0.9722) means it successfully identifies most malignant cases. High AUC (0.9788) indicates good ranking ability. The model benefits from scaled features and appropriate choice of k=5. Performs well because similar tumor characteristics typically indicate similar diagnoses.                                                            |
-| **Naive Bayes**              | Achieves respectable 92.98% accuracy despite strong independence assumptions between features. Remarkably high AUC (0.9868) shows excellent probabilistic calibration for ranking predictions. Balanced precision and recall (both 0.9444) indicate consistent performance across both classes. Fast training and prediction make it suitable for rapid screening applications.                                                                                  |
-| **Random Forest (Ensemble)** | Delivers strong 95.61% accuracy through ensemble of decision trees, significantly outperforming single decision tree. Highest AUC (0.9939) among all models demonstrates exceptional discriminative ability. Excellent recall (0.9722) minimizes false negatives, critical for Diabetes risk detection. The ensemble approach effectively reduces overfitting while maintaining interpretability through feature importance.                                            |
-| **XGBoost (Ensemble)**       | Achieves 95.61% accuracy with best recall (0.9861) among top performers, meaning it catches almost all malignant cases. Very high AUC (0.9917) confirms strong ranking capability. Gradient boosting with regularization prevents overfitting effectively. Slightly lower precision (0.9467) compared to Logistic Regression, but superior recall makes it safer for medical screening where missing Diabetes risk is more costly than false alarms.                    |
+| **Logistic Regression** | Delivers solid performance with 90.38% accuracy and strong AUC (0.9629), indicating good class separation. Precision and recall are perfectly aligned (0.9296), resulting in a balanced F1 score. The MCC of 0.7781 reflects dependable predictive strength despite potential class imbalance. Its linear structure performs well given the dataset’s feature distribution. |
+| **Decision Tree** | Achieves 91.35% accuracy with improved AUC (0.9706) compared to Logistic Regression. Very high precision (0.9697) suggests confident positive predictions, though slightly lower recall (0.9014) indicates some missed positive cases. MCC (0.8127) shows better overall correlation than simpler linear models. While interpretable, it may still capture noise from the training data. |
+| **kNN** | Matches Logistic Regression in accuracy (90.38%) but records a higher AUC (0.9742), showing strong ranking capability. Precision (0.9552) is high, while recall (0.9014) is moderate, leading to a well-balanced F1 score. MCC (0.7880) confirms competitive performance. The model benefits from distance-based learning where similar samples share similar outcomes. |
+| **Naive Bayes** | Reaches 91.35% accuracy with balanced precision (0.9306) and recall (0.9437), producing a stable F1 score. Despite its independence assumption, it performs competitively with an AUC of 0.9620. MCC (0.7988) indicates consistent predictive reliability. Its computational efficiency makes it suitable for fast inference scenarios. |
+| **Random Forest** | Provides strong results with 93.27% accuracy and high AUC (0.9825), demonstrating excellent discrimination ability. High recall (0.9577) reduces false negatives, while precision (0.9444) remains robust. MCC (0.8436) reflects strong overall classification quality. The ensemble approach improves stability and mitigates overfitting compared to a single tree. |
+| **XGBoost** | Delivers the best overall performance with 98.08% accuracy and an outstanding AUC of 0.9970. Perfect precision (1.0000) combined with high recall (0.9718) yields the strongest F1 score. MCC (0.9572) confirms superior predictive power across classes. Gradient boosting with regularization enables exceptional generalization on this dataset. |             |
 
 ---
 
@@ -115,20 +115,20 @@ Class Label - Positive/Negative diabetes risk
 
 ### Best Performing Models:
 
-1. **Logistic Regression** - Highest accuracy (98.25%) and excellent all-around metrics
-2. **Random Forest** & **XGBoost** & **kNN** (tied at 95.61% accuracy)
+1. **XGBoost (Ensemble)** - Achieved the highest accuracy (98.08%) with outstanding overall evaluation scores across all performance metrics.
+2. **Random Forest (Ensemble)** - Delivered strong results with 93.27% accuracy and consistently high precision–recall balance.
 
 ### Model Selection Recommendations:
 
-- **For Production Deployment:** Logistic Regression - Best accuracy, interpretability, and balanced metrics
-- **For Maximum Recall (Safety):** XGBoost - Catches 98.61% of malignant cases
-- **For Probabilistic Ranking:** Random Forest - Highest AUC (0.9939)
-- **For Speed:** Naive Bayes - Fastest training and prediction time
-- **For Interpretability:** Logistic Regression - Linear coefficients are easy to explain to medical professionals
+- **For Production Deployment:** XGBoost (Ensemble) - Highest accuracy (98.08%) with superior overall performance.
+- **For Maximum Recall (Safety Focus):** Random Forest (Ensemble) - Highest recall (0.9577), minimizing false negatives.
+- **For Best Ranking Capability:** XGBoost (Ensemble) - Outstanding AUC (0.9970), indicating exceptional class separation.
+- **For Computational Efficiency:** Naive Bayes - Lightweight model with fast training and inference.
+- **For Interpretability:** Logistic Regression - Linear model with transparent and easily explainable coefficients.
 
 ### Clinical Context:
 
-In medical diagnosis, **recall** (sensitivity) is often more important than precision to minimize false negatives (missing biabetics cases). XGBoost shows the highest recall (98.61%), closely followed by Logistic Regression (98.61%), making them both excellent choices for medical screening applications where catching all positive cases is critical.
+In medical diagnosis, **recall** (sensitivity) is often more important than precision to minimize false negatives (missing diabetics cases). XGBoost shows the highest recall (97.18%), closely followed by Random Forest (95.77%), making them both excellent choices for medical condition detection applications where catching all positive cases is critical.
 
 ---
 
@@ -251,7 +251,7 @@ The app will be live within a few minutes at: `https://diabetes-risk-prediction-
 
 ## Author
 
-**MOHAMMAD HAMZA**
+**MOHAMMAD HAMZA - 2025AA05070**
 
 ---
 
