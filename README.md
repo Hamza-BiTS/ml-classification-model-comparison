@@ -1,66 +1,67 @@
-# ML Assignment 2 - Classification Model Comparison
+# Classification Model Comparison for Early Stage Diabetes Risk Prediction
 
-**M.Tech (AIML/DSE) - Machine Learning Assignment 2**
-**Author:** Karthik S Kashyap, M.Tech AIML
-**Date:** January 2026
+**M.Tech-AIML - Machine Learning Assignment 2**
+**Author:** MOHAMMAD HAMZA
+**Date:** February 2026
 
 ---
 
 ## Problem Statement
 
-The objective of this assignment is to implement and compare **six different classification models** on a real-world dataset. The models are evaluated using multiple performance metrics to understand their strengths and weaknesses. Additionally, an interactive **Streamlit web application** is developed to demonstrate the models and deployed on **Streamlit Community Cloud** for easy accessibility.
+The objective of this assignment is to design, implement, and compare **six classification models** on a real-world medical dataset related to early-stage diabetes risk. The models are assessed using multiple performance metrics to gain insight into their predictive behavior, interpretability, and robustness across different evaluation criteria. In addition, an interactive Streamlit web application is built to showcase the trained models and is deployed on Streamlit Community Cloud to enable convenient access and experimentation for end users.
 
-The classification task involves predicting whether a breast tumor is **malignant** or **benign** based on various diagnostic features extracted from digitized images of fine needle aspirates (FNA) of breast masses.
+The classification task focuses on predicting whether a patient is at **risk of early-stage diabetes or not**, using a set of clinical signs and symptoms collected through questionnaires at a diabetes hospital. These features include demographic information such as age and gender, along with multiple binary indicators like polyuria, polydipsia, sudden weight loss, weakness, visual blurring, and other diabetes-related conditions.
 
 ---
 
 ## Dataset Description
 
-**Dataset:** Breast Cancer Wisconsin (Diagnostic) Dataset
-
-**Source:** UCI Machine Learning Repository / sklearn.datasets
-
+**Dataset:** Early Stage Diabetes Risk Prediction Dataset
+**Source:** UCI Machine Learning Repository
 **Problem Type:** Binary Classification
 
-### Dataset Characteristics:
+# Dataset Characteristics:
 
-- **Number of Instances:** 569
-- **Number of Features:** 30 (all numerical)
-- **Target Variable:**
-  - 0 = Malignant (Cancer)
-  - 1 = Benign (Non-cancerous)
+**Number of Instances:** 520 (patients)
+
+**Number of Features:** 16 attributes (mix of numerical and categorical/symptom-based)
+
+**Target Variable:**
+
+1 = Positive for early-stage diabetes risk
+
+0 = Negative (no early-stage diabetes risk)
+
 - **Class Distribution:**
-  - Malignant: 212 instances (37.3%)
-  - Benign: 357 instances (62.7%)
+  - Positive: 320 instances (61.5%)
+  - Negative: 200 instances (38.5%)
 
 ### Features:
 
-The dataset contains 30 features computed from a digitized image of a fine needle aspirate (FNA) of a breast mass. They describe characteristics of the cell nuclei present in the image.
+The dataset includes 16 features gathered from patient questionnaires and clinical assessments at a diabetes hospital, capturing symptoms, demographics, and risk factors for early-stage diabetes prediction.
 
 **Feature Groups:**
 
-1. **Radius** - Mean of distances from center to points on the perimeter
-2. **Texture** - Standard deviation of gray-scale values
-3. **Perimeter** - Tumor perimeter
-4. **Area** - Tumor area
-5. **Smoothness** - Local variation in radius lengths
-6. **Compactness** - (Perimeter² / Area) - 1.0
-7. **Concavity** - Severity of concave portions of the contour
-8. **Concave Points** - Number of concave portions of the contour
-9. **Symmetry** - Symmetry of the tumor
-10. **Fractal Dimension** - "Coastline approximation" - 1
-
-For each feature, three values are computed:
-
-- **Mean**
-- **Standard Error**
-- **Worst** (mean of the three largest values)
-
-This results in 30 features total (10 characteristics × 3 statistical measures).
+Demographics - Age (numeric range) and Gender (Male/Female)
+Urinary Symptoms - Polyuria (excessive urination)
+Thirst Indicators - Polydipsia (excessive thirst)
+Weight Changes - Sudden Weight Loss
+General Fatigue - Weakness
+Hunger Patterns - Polyphagia (excessive hunger)
+Infection Signs - Genital Thrush
+Vision Issues - Visual Blurring
+Skin Conditions - Itching
+Mood Effects - Irritability
+Healing Problems - Delayed Healing
+Nerve-Related - Partial Paresis (muscle weakness)
+Mobility Issues - Muscle Stiffness
+Hair Loss - Alopecia
+Obesity Factor - Obesity (BMI-related)
+Class Label - Positive/Negative diabetes risk
 
 **Missing Values:** None
 
-**Data Split:** 80% Training (455 samples) / 20% Testing (114 samples)
+**Data Split:** 80% Training (416 samples) / 20% Testing (104 samples)
 
 ---
 
@@ -87,8 +88,8 @@ This results in 30 features total (10 characteristics × 3 statistical measures)
 | **Decision Tree**            | Shows the lowest performance with 91.23% accuracy, indicating tendency to overfit despite max_depth constraint. Lower recall (0.9028) compared to other models means it misses more malignant cases, which is problematic for medical diagnosis. However, high precision (0.9559) shows that when it predicts malignant, it's usually correct. The model's interpretability is valuable but comes at the cost of prediction accuracy.                            |
 | **kNN**                      | Demonstrates strong performance (95.61% accuracy) by leveraging local similarity between samples. Excellent recall (0.9722) means it successfully identifies most malignant cases. High AUC (0.9788) indicates good ranking ability. The model benefits from scaled features and appropriate choice of k=5. Performs well because similar tumor characteristics typically indicate similar diagnoses.                                                            |
 | **Naive Bayes**              | Achieves respectable 92.98% accuracy despite strong independence assumptions between features. Remarkably high AUC (0.9868) shows excellent probabilistic calibration for ranking predictions. Balanced precision and recall (both 0.9444) indicate consistent performance across both classes. Fast training and prediction make it suitable for rapid screening applications.                                                                                  |
-| **Random Forest (Ensemble)** | Delivers strong 95.61% accuracy through ensemble of decision trees, significantly outperforming single decision tree. Highest AUC (0.9939) among all models demonstrates exceptional discriminative ability. Excellent recall (0.9722) minimizes false negatives, critical for cancer detection. The ensemble approach effectively reduces overfitting while maintaining interpretability through feature importance.                                            |
-| **XGBoost (Ensemble)**       | Achieves 95.61% accuracy with best recall (0.9861) among top performers, meaning it catches almost all malignant cases. Very high AUC (0.9917) confirms strong ranking capability. Gradient boosting with regularization prevents overfitting effectively. Slightly lower precision (0.9467) compared to Logistic Regression, but superior recall makes it safer for medical screening where missing cancer is more costly than false alarms.                    |
+| **Random Forest (Ensemble)** | Delivers strong 95.61% accuracy through ensemble of decision trees, significantly outperforming single decision tree. Highest AUC (0.9939) among all models demonstrates exceptional discriminative ability. Excellent recall (0.9722) minimizes false negatives, critical for Diabetes risk detection. The ensemble approach effectively reduces overfitting while maintaining interpretability through feature importance.                                            |
+| **XGBoost (Ensemble)**       | Achieves 95.61% accuracy with best recall (0.9861) among top performers, meaning it catches almost all malignant cases. Very high AUC (0.9917) confirms strong ranking capability. Gradient boosting with regularization prevents overfitting effectively. Slightly lower precision (0.9467) compared to Logistic Regression, but superior recall makes it safer for medical screening where missing Diabetes risk is more costly than false alarms.                    |
 
 ---
 
@@ -109,31 +110,34 @@ This results in 30 features total (10 characteristics × 3 statistical measures)
 
 ### Clinical Context:
 
-In medical diagnosis, **recall** (sensitivity) is often more important than precision to minimize false negatives (missing cancer cases). XGBoost shows the highest recall (98.61%), closely followed by Logistic Regression (98.61%), making them both excellent choices for medical screening applications where catching all positive cases is critical.
+In medical diagnosis, **recall** (sensitivity) is often more important than precision to minimize false negatives (missing biabetics cases). XGBoost shows the highest recall (98.61%), closely followed by Logistic Regression (98.61%), making them both excellent choices for medical screening applications where catching all positive cases is critical.
 
 ---
 
 ## Project Structure
 
 ```
-BreastCancer/
+ml-classification-model-comparison/
 │
-├── app.py                              # Streamlit web application
+├── streamlit_app.py                    # Streamlit web application
 ├── requirements.txt                    # Python dependencies
 ├── README.md                           # Project documentation
-│
+├── train_models.ipynb                  # All Model training Code  
 └── model/
-    ├── train_models.py                # Model training script
-    ├── logistic_regression_model.py   # Saved Logistic Regression model (Python format)
-    ├── decision_tree_model.py         # Saved Decision Tree model (Python format)
-    ├── knn_model.py                   # Saved KNN model (Python format)
-    ├── naive_bayes_model.py           # Saved Naive Bayes model (Python format)
-    ├── random_forest_model.py         # Saved Random Forest model (Python format)
-    ├── xgboost_model.py               # Saved XGBoost model loader (Python format)
-    ├── xgboost_booster.json           # XGBoost booster configuration (JSON format)
-    ├── scaler_model.py                # Feature scaler (Python format)
-    ├── test_data.csv                  # Test dataset
-    └── model_results.csv              # Comparison results
+    ├── logistic_regression.pkl         # Model outcome files
+    ├── decision_tree.pkl
+    ├── k_nearest_neighbors.pkl
+    ├── naive_bayes.pkl
+    ├── random_forest.pkl
+    ├── xgboost.pkl
+    ├── scaler.pkl                      # Feature scaler
+    ├── feature_names.pkl               # All the features
+    ├── confusion_matrices.json         # Confusion Matrics for all the models
+    ├── metrics.json
+    ├── models_comparison.csv           # More detals of the results
+ └── data/
+    ├── test_data.csv                   # Test data for comparision table
+    ├── test_samples.csv                # Test sample for upload option
 ```
 
 ---
@@ -150,8 +154,8 @@ BreastCancer/
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/kak4bmh/ML
-   cd ML/BreastCancer
+   git clone https://github.com/Hamza-BiTS/ml-classification-model-comparison
+   cd ml-classification-model
    ```
 2. **Install dependencies:**
 
@@ -161,12 +165,12 @@ BreastCancer/
 3. **Train the models:**
 
    ```bash
-   python model/train_models.py
+   python train_models.ipynb
    ```
 4. **Run the Streamlit app:**
 
    ```bash
-   streamlit run app.py
+   streamlit run streamlit_app.py
    ```
 5. **Access the app:**
    Open your browser and navigate to `http://localhost:8501`
@@ -196,11 +200,11 @@ The interactive web application includes:
 4. Click **"New App"**
 5. Select your repository
 6. Choose branch: `main`
-7. Select main file: `BreastCancer/app.py`
-8. Update App URL: `ml-assignment-2025aa05388-breastcancer`
+7. Select main file: `ml-classification-model/streamlit_app.py`
+8. Update App URL: `diabetes-risk-prediction-2026`
 9. Click **"Deploy"**
 
-The app will be live within a few minutes at: `https://ml-assignment-2025aa05388-breastcancer.streamlit.app`
+The app will be live within a few minutes at: `https://diabetes-risk-prediction-2026.streamlit.app/`
 
 ---
 
@@ -229,10 +233,7 @@ The app will be live within a few minutes at: `https://ml-assignment-2025aa05388
 
 ## Author
 
-**Karthik S Kashyap
-Student M.Tech (AIML)**
-Work Integrated Learning Programmes Division
-BITS Pilani
+**MOHAMMAD HAMZA**
 
 ---
 
