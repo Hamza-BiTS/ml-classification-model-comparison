@@ -258,12 +258,12 @@ with tab2:
             "XGBoost"
         ],
         "Observation about model performance": [
-            "Provides good baseline performance with balanced precision-recall tradeoff; coefficients are interpretable for feature importance analysis.",
-            "Tends to overfit on training data; shows lower generalization compared to ensemble methods; sensitive to small data variations.",
-            "Performance is moderate; highly sensitive to feature scaling and the choice of k parameter; computationally expensive for large datasets.",
-            "Computationally efficient and fast; performs surprisingly well despite the feature independence assumption; good for real-time predictions.",
-            "Strong ensemble method with high AUC; robust against overfitting through bagging and feature randomness; provides good feature importance.",
-            "Achieves best overall performance across all metrics; effectively captures complex non-linear patterns in data; requires careful hyperparameter tuning."
+            "Gives a solid starting point with stable scores and a good balance between catching positives and avoiding false alarms, while still letting you inspect coefficients to see which features matter most.",
+            "Learns patterns in the training set very aggressively, which can hurt its performance on unseen data and makes it sensitive to small shifts in the dataset.",
+            "Delivers mid-range performance and depends heavily on proper scaling and the choice of neighborhood size, with computation getting heavier as the dataset grows.",
+            "Extremely fast to train and predict, often performing better than expected despite its strong independence assumption, making it handy for quick or real-time use cases.",
+            "Uses multiple trees to provide strong, reliable results with high AUC, naturally reducing overfitting and offering useful insights via feature importance scores.",
+            "Stands out as the top performer across metrics by modeling complex non-linear relationships, but needs careful tuning of its many hyperparameters to reach its full potential."
         ]
     }
     observations_df = pd.DataFrame(observations)
