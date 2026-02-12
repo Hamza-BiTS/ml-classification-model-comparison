@@ -224,19 +224,6 @@ The interactive web application includes:
 
 The app will be live within a few minutes at: `https://diabetes-risk-prediction-2026.streamlit.app/`
 
----
-
-## Technologies Used
-
-- **Python 3.x**
-- **scikit-learn** - Machine learning models and metrics
-- **XGBoost** - Gradient boosting framework
-- **Streamlit** - Web application framework
-- **Pandas** - Data manipulation
-- **NumPy** - Numerical computing
-- **Matplotlib & Seaborn** - Data visualization
-
----
 
 ## Evaluation Metrics Explained
 
@@ -252,17 +239,3 @@ The app will be live within a few minutes at: `https://diabetes-risk-prediction-
 ## Author
 
 **MOHAMMAD HAMZA - 2025AA05070**
-
----
-
-## License
-
-This project is created for educational purposes.
-
----
-
-## Acknowledgments
-
-- Dataset: UCI Machine Learning Repository
-- Framework: Streamlit Community
-- Libraries: scikit-learn, XGBoost, and the Python data science ecosystem
