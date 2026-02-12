@@ -653,7 +653,7 @@ st.markdown(
     """
     <div style='text-align: center; color: #666; padding: 20px;'>
         <p style='font-size: 14px; color: #888;'>
-            Developed with Streamlit | Deployed on Streamlit Community Cloud
+            Developed with <img src="https://streamlit.io/images/brand/streamlit-mark-color.png" width="30" style="vertical-align: middle; margin: 0 5px;"> by <a href="https://www.linkedin.com/in/mohammad-hamza-3994a486/" target="_blank" style="color: #0077B5;">Mohammad Hamza</a>
         </p>
         <p style='font-size: 12px; color: #aaa; margin-top: 10px;'>
             © Early Stage Diabetes Risk Prediction Application
