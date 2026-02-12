@@ -156,6 +156,10 @@ ml-classification-model-comparison/
  └── data/
     ├── test_data.csv                   # Test data for comparision table
     ├── test_samples.csv                # Test sample for upload option
+└── testing/
+    ├── testing.ipynb                   # Data Testing here
+    ├── streamlit_app_old.py            # Streamlit For inspiration
+    ├── streamlit_app_old1.py           # Streamlit For inspiration
 ```
 
 ---
